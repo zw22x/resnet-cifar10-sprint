@@ -2,13 +2,12 @@
 name = "resnet-cifar10"
 version = "0.1.0"
 description = "ResNet-18 from scratch on CIFAR-10 → FastAPI deploy"
-authors = ["Your Name <you@email.com>"]
+authors = ["Zac Westbrook <zacwestbrook24@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-torch = "^2.3.0"
-torchvision = "^0.18.0"
+torch = { version = "^2.3.0" , markers = "sys_platform != 'darwin'"}
 fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
 pillow = "^10.3.0"
