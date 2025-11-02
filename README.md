@@ -1,6 +1,6 @@
 # ResNet-18 from Scratch → CIFAR-10 → FastAPI Deploy
 
-7-day sprint to build **ResNet-18 from scratch** and deploy it as a **FastAPI service**.
+7-14 day sprint to build **ResNet-18 from scratch** and deploy it as a **FastAPI service**.
 
 ---
 
