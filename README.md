@@ -1,6 +1,6 @@
 # ResNet-18 from Scratch → CIFAR-10 → FastAPI Deploy
 
-7-14 day sprint to build **ResNet-18 from scratch** and deploy it as a **FastAPI service**.
+7-14 day sprint to build **ResNet-18 from scratch with AI debugging and deploy it as a **FastAPI service**.
 
 ---
 
@@ -9,6 +9,8 @@
 - Matches **PyTorch `F.conv2d`** within `1e-5` (floating-point tolerance)
 - Full test suite with `pytest`
 - `poetry` + `pytest.ini` + `src/` layout
+
+
 
 ```bash
 poetry run pytest -q
