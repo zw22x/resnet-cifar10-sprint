@@ -6,7 +6,7 @@ from src.conv_torch import conv2d_torch
 import wandb
 
 # Config
-N, C, H, W = 1, 3, 64, 64 # 1 image, 3 channels, 512x512
+N, C, H, W = 1, 3, 128, 128 # 1 image, 3 channels, 512x512
 F, KH, KW = 64, 3, 3 # 64 filters, 3x3 kernel
 stride, padding = 1, 1
 device = 'cpu' # change to cuda if GPU is available or later

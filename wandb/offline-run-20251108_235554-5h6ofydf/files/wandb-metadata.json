@@ -1,0 +1,50 @@
+{
+    "os": "macOS-15.6.1-x86_64-i386-64bit",
+    "python": "3.12.5",
+    "heartbeatAt": "2025-11-09T04:55:55.034619",
+    "startedAt": "2025-11-09T04:55:54.939216",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "#",
+        "Day",
+        "2",
+        "benchmark"
+    ],
+    "state": "running",
+    "program": "/Users/williamwestbrook/resnet-sprint/benchmark.py",
+    "codePathLocal": "benchmark.py",
+    "codePath": "benchmark.py",
+    "git": {
+        "remote": "https://github.com/zw22x/resnet-cifar10-sprint.git",
+        "commit": "a94014c43fcd13dfa264c430e0702152bc732f76"
+    },
+    "email": null,
+    "root": "/Users/williamwestbrook/resnet-sprint",
+    "host": "Williams-MacBook-Pro.local",
+    "username": "williamwestbrook",
+    "executable": "/Users/williamwestbrook/Library/Caches/pypoetry/virtualenvs/resnet-cifar10-AJG6z20R-py3.12/bin/python",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 2000,
+        "min": 2000,
+        "max": 2000
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2000,
+            "min": 2000,
+            "max": 2000
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 465.62699127197266,
+            "used": 10.486530303955078
+        }
+    },
+    "memory": {
+        "total": 16.0
+    }
+}
