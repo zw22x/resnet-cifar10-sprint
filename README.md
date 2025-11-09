@@ -30,6 +30,23 @@ poetry run python benchmark.py
 # PyTorch (cpu): 0.00017s
 # Speedup: 12493.788308x
 
+---
+
+## Tesla FSD Vision Demo — Real Camera Image
+- Used Tesla FSD camera image (`tesla_fsd.jpg`)URL: https://www.google.com/imgres?q=tesla%20road%20image%20from%20front%20camera&imgurl=https%3A%2F%2Fteslamotorsclub.com%2Ftmc%2Fattachments%2Ffront-camera-model-s-lr-png.598369%2F%3Fid%3D5064820&imgrefurl=https%3A%2F%2Fteslamotorsclub.com%2Ftmc%2Fthreads%2Fvideo-issue-from-front-camera-on-new-lr.209692%2F&docid=GAi6_CXV631tXM&tbnid=fNHtZI9qb2hwtM&vet=12ahUKEwjOnbmnpeSQAxWvGtAFHQODOisQM3oECB4QAA..i&w=2000&h=1498&hcb=2&ved=2ahUKEwjOnbmnpeSQAxWvGtAFHQODOisQM3oECB4QAA
+- Ran **my `conv2d_numpy`** (from scratch) → **detected lane lines, cars, trees**
+- Ran **PyTorch `F.conv2d`** → **pixel-perfect match**
+- **Result**: My code **sees like Tesla** — **Layer 1 of FSD vision
+
+Output: 3-panel plot
+
+Raw FSD image
+My NumPy conv → glowing edges
+PyTorch conv → identical
+
+```bash
+poetry run python demo.py
+
 Used Grok as a senior engineer co-pilot for:
 Debugging Poetry, NumPy 2, PyTorch, MacOS issues
 Optimizing benchmark from 3 min → 2 sec
