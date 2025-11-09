@@ -5,7 +5,7 @@
 I am a CS student learning how to build real ML systems with the help of AI from scratch.
 ---
 
-## Day 1: NumPy Conv2d from Scratch
+ NumPy Conv2d from Scratch
 - Implemented **2D convolution** in **pure NumPy**
 - Matches **PyTorch `F.conv2d`** within `1e-5` (floating-point tolerance)
 - Full test suite with `pytest`
