@@ -47,6 +47,19 @@ PyTorch conv → identical
 ```bash
 poetry run python demo.py
 
+---
+
+## Day 3: Residual Block — ResNet from Scratch
+- Built **ResNet's core magic**: `x + F(x)` with **skip connections**
+- `ResidualBlock` in pure PyTorch — **no `torchvision`**
+- Handles **stride changes** and **channel mismatches**
+- Verified: `32×32×3 → 32×32×64` output
+
+```bash
+poetry run python src/residual.py
+# Input:  torch.Size([1, 3, 32, 32])
+# Output: torch.Size([1, 64, 32, 32])
+
 Used Grok as a senior engineer co-pilot for:
 Debugging Poetry, NumPy 2, PyTorch, MacOS issues
 Optimizing benchmark from 3 min → 2 sec
