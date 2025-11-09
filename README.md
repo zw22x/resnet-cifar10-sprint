@@ -49,7 +49,7 @@ poetry run python demo.py
 
 ---
 
-## Day 3: Residual Block — ResNet from Scratch
+Residual Block — ResNet from Scratch
 - Built **ResNet's core magic**: `x + F(x)` with **skip connections**
 - `ResidualBlock` in pure PyTorch — **no `torchvision`**
 - Handles **stride changes** and **channel mismatches**
