@@ -60,6 +60,20 @@ poetry run python src/residual.py
 # Input:  torch.Size([1, 3, 32, 32])
 # Output: torch.Size([1, 64, 32, 32])
 
+---
+
+Full ResNet-18 from Scratch (No `torchvision`)
+- Built **complete ResNet-18** in pure PyTorch
+- 18 layers: 4 stages (64→128→256→512 channels)
+- Skip connections** + BatchNorm** + **ReLU**
+- Fixed **BatchNorm batch size 1 error** → test with batch size 2
+- Verified: `(2, 3, 32, 32) → (2, 10)` output
+
+```bash
+poetry run python src/resnet.py
+# Input:  torch.Size([2, 3, 32, 32])
+# Output: torch.Size([2, 10])
+
 Used Grok as a senior engineer co-pilot for:
 Debugging Poetry, NumPy 2, PyTorch, MacOS issues
 Optimizing benchmark from 3 min → 2 sec
