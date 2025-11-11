@@ -88,6 +88,20 @@ Built and trained to 79% accuracy from scratch with Grok
 poetry run python train.py
 # → 79% test accuracy
 
+---
+
+## Live Demo — Try It Now!
+[http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+- Upload cifar-10 images → get real-time prediction
+- **79% accuracy** on CIFAR-10
+- Built **from scratch** — no `torchvision.models`
+- Trained with **MixUp + Cosine LR**
+- Live on **FastAPI** with **confidence bar**
+
+```bash
+poetry run python app.py
+
 Used Grok as a senior engineer co-pilot for:
 Debugging Poetry, NumPy 2, PyTorch, MacOS issues
 Optimizing benchmark from 3 min → 2 sec
