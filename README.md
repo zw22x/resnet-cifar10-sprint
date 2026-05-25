@@ -1,120 +1,142 @@
 # ResNet-18 from Scratch → CIFAR-10 → FastAPI Deploy
 
- Sprint to build **ResNet-18 from scratch (with AI (Grok) debugging/navigation and as a 'senior engineer' co pilot through the project) and deploy it as a **FastAPI service**.
+> Built as a CS student learning real ML systems — with Grok as a senior engineer co-pilot.
+> I typed every line. I ran every test. I own the result.
 
-I am a CS student learning how to build real ML systems with the help of AI from scratch.
----
+-----
 
- NumPy Conv2d from Scratch
-- Implemented **2D convolution** in **pure NumPy**
-- Matches **PyTorch `F.conv2d`** within `1e-5` (floating-point tolerance)
-- Full test suite with `pytest`
-- `poetry` + `pytest.ini` + `src/` layout
+## Stack
 
+|Tool            |Purpose                             |
+|----------------|------------------------------------|
+|Python 3.12     |Core language                       |
+|Poetry          |Dependency & env management         |
+|PyTorch         |Reference implementation + GPU-ready|
+|NumPy           |Conv2d from scratch                 |
+|pytest          |Full test suite                     |
+|FastAPI         |Model serving                       |
+|Weights & Biases|Live training dashboard             |
+
+-----
+
+## Phase 1 — NumPy Conv2d from Scratch
+
+- Implemented 2D convolution in pure NumPy
+- Matches PyTorch `F.conv2d` within `1e-5` (floating-point tolerance)
+- Full test suite with pytest, `poetry + pytest.ini + src/` layout
 
 ```bash
 poetry run pytest -q
 # 1 passed — SUCCESS!
+```
 
 ### Benchmark: NumPy vs PyTorch (CPU)
-- **Input**: 128×128 RGB image, 16 filters (3×3), stride=1, padding=1
-- **NumPy (from scratch)**: Pure Python loops → **2.08 seconds**
-- **PyTorch (`F.conv2d`)**: Optimized C++/CPU backend → **0.00017 seconds**
-- **Result**: **12,493× speedup** with just one line of code
-- **Takeaway**: You now understand *why* deep learning frameworks exist.
+
+|                    |                                                        |
+|--------------------|--------------------------------------------------------|
+|Input               |128×128 RGB image, 16 filters (3×3), stride=1, padding=1|
+|NumPy (from scratch)|**2.08 seconds**                                        |
+|PyTorch (`F.conv2d`)|**0.00017 seconds**                                     |
+|Speedup             |**12,493×**                                             |
 
 ```bash
 poetry run python benchmark.py
-# Output:
-# NumPy:  2.08393s
-# PyTorch (cpu): 0.00017s
+# NumPy:   2.08393s
+# PyTorch: 0.00017s
 # Speedup: 12493.788308x
+```
 
----
+> **Takeaway:** You now understand *why* deep learning frameworks exist.
 
-## Tesla FSD Vision Demo — Real Camera Image
-- Used Tesla FSD camera image (`tesla_fsd.jpg`)URL: https://www.google.com/imgres?q=tesla%20road%20image%20from%20front%20camera&imgurl=https%3A%2F%2Fteslamotorsclub.com%2Ftmc%2Fattachments%2Ffront-camera-model-s-lr-png.598369%2F%3Fid%3D5064820&imgrefurl=https%3A%2F%2Fteslamotorsclub.com%2Ftmc%2Fthreads%2Fvideo-issue-from-front-camera-on-new-lr.209692%2F&docid=GAi6_CXV631tXM&tbnid=fNHtZI9qb2hwtM&vet=12ahUKEwjOnbmnpeSQAxWvGtAFHQODOisQM3oECB4QAA..i&w=2000&h=1498&hcb=2&ved=2ahUKEwjOnbmnpeSQAxWvGtAFHQODOisQM3oECB4QAA
-- Ran **my `conv2d_numpy`** (from scratch) → **detected lane lines, cars, trees**
-- Ran **PyTorch `F.conv2d`** → **pixel-perfect match**
-- **Result**: My code **sees like Tesla** — **Layer 1 of FSD vision
+-----
 
-Output: 3-panel plot
+## Phase 2 — Tesla FSD Vision Demo
 
-Raw FSD image
-My NumPy conv → glowing edges
-PyTorch conv → identical
+- Used a real Tesla FSD front-camera image (`tesla_fsd.jpg`)
+- Ran my `conv2d_numpy` (from scratch) → detected lane lines, cars, trees
+- Ran PyTorch `F.conv2d` → pixel-perfect match
+- **Result:** My code sees like Tesla — Layer 1 of FSD vision
 
 ```bash
 poetry run python demo.py
+```
 
----
+Output: 3-panel plot
 
-Residual Block — ResNet from Scratch
-- Built **ResNet's core magic**: `x + F(x)` with **skip connections**
-- `ResidualBlock` in pure PyTorch — **no `torchvision`**
-- Handles **stride changes** and **channel mismatches**
+1. Raw FSD image
+1. NumPy conv → glowing edges
+1. PyTorch conv → identical
+
+-----
+
+## Phase 3 — Residual Block
+
+- Built ResNet’s core mechanic: `x + F(x)` with skip connections
+- `ResidualBlock` in pure PyTorch — no `torchvision`
+- Handles stride changes and channel mismatches
 - Verified: `32×32×3 → 32×32×64` output
 
 ```bash
 poetry run python src/residual.py
 # Input:  torch.Size([1, 3, 32, 32])
 # Output: torch.Size([1, 64, 32, 32])
+```
 
----
+-----
 
-Full ResNet-18 from Scratch (No `torchvision`)
-- Built **complete ResNet-18** in pure PyTorch
-- 18 layers: 4 stages (64→128→256→512 channels)
-- Skip connections** + BatchNorm** + **ReLU**
-- Fixed **BatchNorm batch size 1 error** → test with batch size 2
+## Phase 4 — Full ResNet-18 from Scratch
+
+- Complete ResNet-18 in pure PyTorch — no `torchvision`
+- 18 layers: 4 stages (64 → 128 → 256 → 512 channels)
+- Skip connections + BatchNorm + ReLU
+- Fixed BatchNorm batch-size-1 error → test with batch size 2
 - Verified: `(2, 3, 32, 32) → (2, 10)` output
 
 ```bash
 poetry run python src/resnet.py
 # Input:  torch.Size([2, 3, 32, 32])
 # Output: torch.Size([2, 10])
+```
 
----
+-----
 
-Trained ResNet-18 on CIFAR-10 — 79% Test Accuracy
-- Trained **10 and 20 epochs** with **MixUp + Cosine LR (changed from scheduler that hit 65% accuracy)**
-- Final: **79% test accuracy** (top 1% from-scratch)
+## Phase 5 — Training on CIFAR-10
+
+- Trained 10 and 20 epochs with **MixUp + Cosine LR**
+- Previous scheduler topped out at 65% accuracy
+- **Final: 79% test accuracy** (top 1% from-scratch results)
 - Live dashboard: [W&B Run](https://wandb.ai/zacwestbrook24-student/resnet-cifar10-sprint)
-- Used **my Tesla FSD image** to prove conv sees lanes
-
-Built and trained to 79% accuracy from scratch with Grok
 
 ```bash
 poetry run python train.py
 # → 79% test accuracy
+```
 
----
+-----
 
-## Live Demo — Try It Now!
-[http://127.0.0.1:8000](http://127.0.0.1:8000)
+## Phase 6 — FastAPI Deployment
 
-- Upload cifar-10 images → get real-time prediction
-- **79% accuracy** on CIFAR-10
-- Built **from scratch** — no `torchvision.models`
-- Trained with **MixUp + Cosine LR**
-- Live on **FastAPI** with **confidence bar**
+- Upload CIFAR-10 images → real-time prediction with confidence bar
+- Live at `http://127.0.0.1:8000`
 
 ```bash
 poetry run python app.py
+```
 
-Used Grok as a senior engineer co-pilot for:
-Debugging Poetry, NumPy 2, PyTorch, MacOS issues
-Optimizing benchmark from 3 min → 2 sec
-Explaining convolution with Tesla FSD visuals
-Writing clean, production-grade code
+**Features:**
 
-I typed every line. I ran every test. I own the result.
+- 79% accuracy on CIFAR-10
+- Built from scratch — no `torchvision.models`
+- Trained with MixUp + Cosine LR
+- Served via FastAPI
 
-Stack
+-----
 
-Python 3.12
-Poetry (dependency + env management)
-PyTorch (reference + GPU-ready)
-NumPy (from scratch)
-pytest (testing)
-GitHub (CI/CD ready)
+## AI Co-Pilot Methodology
+
+Used **Grok** as a senior engineer throughout the project for:
+
+- Debugging Poetry, NumPy 2, PyTorch, and macOS environment issues
+- Optimizing the benchmark from ~3 min → 2 sec
+- Explaining convolution visually with Tesla FSD demos
+- Writing clean, production-grade code patterns
